@@ -1,0 +1,310 @@
+{
+  "name": "Agente de Prospeccion B2B",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "18db5dc0-01a5-4456-99c0-3c9b92ac460b",
+      "name": "Agente de prospección"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA",
+          "mode": "list",
+          "cachedResultName": "Agente de prospección",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1476096575,
+          "mode": "list",
+          "cachedResultName": "Pestaña config",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA/edit#gid=1476096575"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d8fb93ea-1052-4922-97ef-c06c5b5a7a07",
+      "name": "Config",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4mbU12QtKzFEe85D",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA",
+          "mode": "list",
+          "cachedResultName": "Agente de prospección",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1200759530,
+          "mode": "list",
+          "cachedResultName": "Pestaña prospectos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA/edit#gid=1200759530"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        0
+      ],
+      "id": "cc894910-3b74-477e-bbc7-053b63704922",
+      "name": "Prospectos",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4mbU12QtKzFEe85D",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "=user",
+              "content": "=Eres un asistente de prospección B2B. Usa esta configuración de mi empresa:\n\nPRODUCTO: {{ $('Config').first().json['Producto'] }}\nPROPUESTA DE VALOR: {{ $('Config').first().json['Propuesta de valor'] }}\nCLIENTE IDEAL: {{ $('Config').first().json['Cliente ideal'] }}\nDOLORES CLAVE POR SECTOR: {{ $('Config').first().json['Dolores clave'] }}\nIDIOMA: {{ $('Config').first().json['Idioma'] }}\nTONO: {{ $('Config').first().json['Tono'] }}\nREMITENTE: {{ $('Config').first().json['Remitente'] }}\n\nAnaliza este prospecto:\nEMPRESA: {{ $json.Empresa }}\nCIUDAD: {{ $json.Ciudad }}\nSECTOR: {{ $json.Sector }}\nDESCRIPCION: {{ $json.Descripcion }}\n\nResponde SOLO en JSON con estas 3 claves:\n\"resumen\": qué hace la empresa, en máximo 2 líneas.\n\"dolor\": su dolor más probable, eligiendo el dolor clave que corresponde a su sector y conectándolo con lo que hace esta empresa.\n\"mensaje\": un primer mensaje de LinkedIn de máximo 80 palabras, en el idioma y tono indicados, específico para esta empresa, que termine con una pregunta abierta y firmado por el remitente."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        0
+      ],
+      "id": "4d85ec6b-3bb1-4365-91aa-6f6959dedd88",
+      "name": "IA",
+      "credentials": {
+        "openAiApi": {
+          "id": "xiF3BUxVfOWpGKmd",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA",
+          "mode": "list",
+          "cachedResultName": "Agente de prospección",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1200759530,
+          "mode": "list",
+          "cachedResultName": "Pestaña prospectos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OlTaae7P8i8YNm3vIXJCsVG5SCZNu7YG50sdTcAUxOA/edit#gid=1200759530"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Prospectos').item.json.row_number }}",
+            "Resumen": "={{ $json.output[0].content[0].text.resumen }}",
+            "Dolor probable": "={{ $json.output[0].content[0].text.dolor }}",
+            "Mensaje": "={{ $json.output[0].content[0].text.mensaje }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ciudad",
+              "displayName": "Ciudad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Sector",
+              "displayName": "Sector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Descripcion",
+              "displayName": "Descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen",
+              "displayName": "Resumen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Dolor probable",
+              "displayName": "Dolor probable",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "d79a387f-8959-4380-9bda-81cf9631273f",
+      "name": "Escribir resultados",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4mbU12QtKzFEe85D",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Agente de prospección": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Prospectos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prospectos": {
+      "main": [
+        [
+          {
+            "node": "IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IA": {
+      "main": [
+        [
+          {
+            "node": "Escribir resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "850e794c-0799-47e7-bf05-b93af7625270",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f35ba3e6850ad1df2519bc5d436eae6fa789305aa13e9d1b041765da26e0fec8"
+  },
+  "nodeGroups": [],
+  "id": "QbVG1eEZPDYwiDLo",
+  "tags": []
+}
