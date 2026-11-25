@@ -19,7 +19,7 @@ Every message is reviewed by a human before it's sent.
 
 ## How it works
 
-![Workflow](workflow.png)
+![Workflow](Workflow.png)
 
 | Step | Node | What it does |
 |---|---|---|
@@ -36,7 +36,7 @@ The agent separates **what I sell** (Config tab) from **who I sell to** (Prospec
 
 ## Sample output
 
-![Results](results.png)
+![Results](Results.png)
 
 ## Tech stack
 - **n8n**: workflow automation
